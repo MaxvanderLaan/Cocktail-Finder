@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cocktailfinder.model.Cocktail;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,31 +22,52 @@ import java.util.List;
 
 public class SearchViewModel extends ViewModel {
 
-    private final MutableLiveData<List<String>> cocktailNames;
-    private String url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita";
+    private final MutableLiveData<List<Cocktail>> cocktailList;
 
     public SearchViewModel() {
-        cocktailNames = new MutableLiveData<>();
+        cocktailList = new MutableLiveData<>();
     }
 
-    public void loadCocktailNames(Context context) {
+    public void loadCocktailNames(Context context, String query) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
+        String url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + query;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                List<String> names = new ArrayList<>();
+                List<Cocktail> cocktails = new ArrayList<>();
                 try {
                     JSONArray drinks = response.getJSONArray("drinks");
                     for (int i = 0; i < drinks.length(); i++) {
                         JSONObject drink = drinks.getJSONObject(i);
-                        String drinkName = drink.getString("strDrink");
-                        names.add(drinkName);
+                        Cocktail cocktail = new Cocktail(
+                                drink.getString("idDrink"),
+                                drink.getString("strDrink"),
+                                drink.optString("strTags"),
+                                drink.getString("strCategory"),
+                                drink.getString("strAlcoholic"),
+                                drink.getString("strGlass"),
+                                drink.getString("strInstructions"),
+                                drink.optString("strIngredient1"),
+                                drink.optString("strIngredient2"),
+                                drink.optString("strIngredient3"),
+                                drink.optString("strIngredient4"),
+                                drink.optString("strIngredient5"),
+                                drink.optString("strIngredient6"),
+                                drink.optString("strMeasure1"),
+                                drink.optString("strMeasure2"),
+                                drink.optString("strMeasure3"),
+                                drink.optString("strMeasure4"),
+                                drink.optString("strMeasure5"),
+                                drink.optString("strMeasure6"),
+                                drink.getString("strDrinkThumb")
+                        );
+                        cocktails.add(cocktail);
                     }
                 } catch (Exception e) {
                     Log.e("VolleyResponse", "Error parsing JSON", e);
                 }
-                cocktailNames.setValue(names);
+                cocktailList.setValue(cocktails);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -57,7 +79,7 @@ public class SearchViewModel extends ViewModel {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public LiveData<List<String>> getCocktailNames() {
-        return cocktailNames;
+    public LiveData<List<Cocktail>> getCocktailList() {
+        return cocktailList;
     }
 }

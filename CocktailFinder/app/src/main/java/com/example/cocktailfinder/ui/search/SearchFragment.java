@@ -1,9 +1,13 @@
 package com.example.cocktailfinder.ui.search;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cocktailfinder.R;
 import com.example.cocktailfinder.databinding.FragmentSearchBinding;
-
-import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -33,18 +35,22 @@ public class SearchFragment extends Fragment {
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize the adapter
         adapter = new CocktailAdapter(getContext(), null);
         recyclerView.setAdapter(adapter);
 
-        // Observe the LiveData from the ViewModel
-        searchViewModel.getCocktailNames().observe(getViewLifecycleOwner(), names -> {
-            // Update the adapter's data
-            adapter.updateData(names);
+        searchViewModel.getCocktailList().observe(getViewLifecycleOwner(), cocktails -> {
+            adapter.updateData(cocktails);
         });
 
-        // Call loadCocktailNames from the ViewModel
-        searchViewModel.loadCocktailNames(requireContext());
+        EditText searchBar = binding.searchBar;
+        searchBar.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = searchBar.getText().toString();
+                searchViewModel.loadCocktailNames(requireContext(), query);
+                return true;
+            }
+            return false;
+        });
 
         return root;
     }
