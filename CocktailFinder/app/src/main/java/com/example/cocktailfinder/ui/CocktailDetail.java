@@ -31,28 +31,72 @@ public class CocktailDetail extends AppCompatActivity {
         TextView glassTextView = findViewById(R.id.cocktail_glass);
         TextView instructionsTextView = findViewById(R.id.cocktail_instructions);
         TextView ingredientsTextView = findViewById(R.id.cocktail_ingredients);
+        TextView instructionsLabel = findViewById(R.id.instructions_label);
+        TextView ingredientsLabel = findViewById(R.id.ingredients_label);
         ImageView cocktailImageView = findViewById(R.id.cocktail_image);
 
         if (cocktail != null) {
-            nameTextView.setText(cocktail.getStrDrink());
-            tagsTextView.setText(cocktail.getStrTags());
-            categoryTextView.setText(cocktail.getStrCategory());
-            alcoholicTextView.setText(cocktail.getStrAlcoholic());
-            glassTextView.setText(cocktail.getStrGlass());
-            instructionsTextView.setText(cocktail.getStrInstructions());
+            setTextView(nameTextView, cocktail.getStrDrink());
+            String formattedTags = formatTags(cocktail.getStrTags());
+            setTextView(tagsTextView, "Tags: " + formattedTags);
+            setTextView(categoryTextView, cocktail.getStrCategory());
+            setTextView(alcoholicTextView, cocktail.getStrAlcoholic());
+            setTextView(glassTextView, cocktail.getStrGlass());
+            setTextView(instructionsTextView, cocktail.getStrInstructions());
+
+            if (cocktail.getStrInstructions() == null || cocktail.getStrInstructions().isEmpty()) {
+                instructionsLabel.setVisibility(TextView.GONE);
+            } else {
+                instructionsLabel.setVisibility(TextView.VISIBLE);
+            }
 
             StringBuilder ingredients = new StringBuilder();
-            if (cocktail.getStrIngredient1() != null) ingredients.append(cocktail.getStrIngredient1()).append(" - ").append(cocktail.getStrMeasure1()).append("\n");
-            if (cocktail.getStrIngredient2() != null) ingredients.append(cocktail.getStrIngredient2()).append(" - ").append(cocktail.getStrMeasure2()).append("\n");
-            if (cocktail.getStrIngredient3() != null) ingredients.append(cocktail.getStrIngredient3()).append(" - ").append(cocktail.getStrMeasure3()).append("\n");
-            if (cocktail.getStrIngredient4() != null) ingredients.append(cocktail.getStrIngredient4()).append(" - ").append(cocktail.getStrMeasure4()).append("\n");
-            if (cocktail.getStrIngredient5() != null) ingredients.append(cocktail.getStrIngredient5()).append(" - ").append(cocktail.getStrMeasure5()).append("\n");
-            if (cocktail.getStrIngredient6() != null) ingredients.append(cocktail.getStrIngredient6()).append(" - ").append(cocktail.getStrMeasure6()).append("\n");
-            ingredientsTextView.setText(ingredients.toString());
+            int ingredientNumber = 1;
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient1(), cocktail.getStrMeasure1(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient2(), cocktail.getStrMeasure2(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient3(), cocktail.getStrMeasure3(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient4(), cocktail.getStrMeasure4(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient5(), cocktail.getStrMeasure5(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient6(), cocktail.getStrMeasure6(), ingredientNumber);
+
+            if (ingredients.length() == 0) {
+                ingredientsLabel.setVisibility(TextView.GONE);
+                ingredientsTextView.setVisibility(TextView.GONE);
+            } else {
+                ingredientsLabel.setVisibility(TextView.VISIBLE);
+                ingredientsTextView.setText(ingredients.toString());
+            }
 
             // Load the cocktail image URL using AsyncTask
             new LoadImageTask(cocktailImageView).execute(cocktail.getStrDrinkThumb());
         }
+    }
+
+    private void setTextView(TextView textView, String text) {
+        if (text == null || text.isEmpty()) {
+            textView.setVisibility(TextView.GONE);
+        } else {
+            textView.setText(text);
+        }
+    }
+
+    private int appendIngredient(StringBuilder ingredients, String ingredient, String measure, int number) {
+        if (ingredient != null && !ingredient.isEmpty()) {
+            ingredients.append(number).append(". ").append(ingredient);
+            if (measure != null && !measure.isEmpty()) {
+                ingredients.append(" - ").append(measure);
+            }
+            ingredients.append("\n");
+            number++;
+        }
+        return number;
+    }
+
+    private String formatTags(String tags) {
+        if (tags == null || tags.isEmpty()) {
+            return "";
+        }
+        return tags.replace(",", ", ");
     }
 
     private static class LoadImageTask extends AsyncTask<String, Void, Bitmap> {

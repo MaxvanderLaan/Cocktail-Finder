@@ -20,20 +20,29 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp">
 
         <TextView
             android:id="@+id/cocktail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="2dp"/>
 
-        <TextView
-            android:id="@+id/cocktail_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tags_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/cocktail_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/cocktail_category"
@@ -53,16 +62,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
 
+        <!-- Bold Instructions label -->
+        <TextView
+            android:id="@+id/instructions_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructions:"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
         <TextView
             android:id="@+id/cocktail_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Bold Ingredients label -->
+        <TextView
+            android:id="@+id/ingredients_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredients:"
+            android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/cocktail_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 </LinearLayout>
