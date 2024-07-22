@@ -42,7 +42,8 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation("com.android.volley:volley:1.2.0")   //ask if usage is permitted
+    implementation("com.android.volley:volley:1.2.0")
+    implementation("androidx.preference:preference:1.1.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -1,5 +1,6 @@
-package com.example.cocktailfinder.ui;
+package com.example.cocktailfinder.ui.cocktail;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.example.cocktailfinder.R;
 import com.example.cocktailfinder.model.Cocktail;
@@ -19,6 +21,17 @@ public class CocktailDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Retrieve the dark mode preference
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
+
+        // Apply the theme based on the preference
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark);
+        } else {
+            setTheme(R.style.AppTheme_Light);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cocktail_detail);
 

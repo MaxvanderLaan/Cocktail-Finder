@@ -20,10 +20,9 @@
 
     import com.example.cocktailfinder.R;
     import com.example.cocktailfinder.model.Cocktail;
-    import com.example.cocktailfinder.ui.CocktailDetail;
+    import com.example.cocktailfinder.ui.cocktail.CocktailDetail;
 
     import java.io.InputStream;
-    import java.net.HttpURLConnection;
     import java.net.URL;
     import java.util.List;
 
