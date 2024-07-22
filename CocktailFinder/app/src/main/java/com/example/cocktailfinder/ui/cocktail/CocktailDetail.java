@@ -71,6 +71,12 @@ public class CocktailDetail extends AppCompatActivity {
             ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient4(), cocktail.getStrMeasure4(), ingredientNumber);
             ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient5(), cocktail.getStrMeasure5(), ingredientNumber);
             ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient6(), cocktail.getStrMeasure6(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient7(), cocktail.getStrMeasure7(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient8(), cocktail.getStrMeasure8(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient9(), cocktail.getStrMeasure9(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient10(), cocktail.getStrMeasure10(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient11(), cocktail.getStrMeasure11(), ingredientNumber);
+            ingredientNumber = appendIngredient(ingredients, cocktail.getStrIngredient12(), cocktail.getStrMeasure12(), ingredientNumber);
 
             if (ingredients.length() == 0) {
                 ingredientsLabel.setVisibility(TextView.GONE);

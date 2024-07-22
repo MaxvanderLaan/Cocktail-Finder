@@ -26,4 +26,13 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
+
+    <!-- Custom dialog button styles -->
+    <style name="DialogButtonLight">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DialogButtonDark">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

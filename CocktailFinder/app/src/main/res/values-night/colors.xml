@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="icon_light_mode">#000000</color> <!-- Black for light mode -->
+    <color name="icon_dark_mode">#FFFFFF</color> <!-- White for dark mode -->
+</resources>

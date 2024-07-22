@@ -10,7 +10,8 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -31,4 +32,12 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/download_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_download"
+        android:contentDescription="@string/download_icon"
+        android:layout_gravity="center"/>
 </LinearLayout>
