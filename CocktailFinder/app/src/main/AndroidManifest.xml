@@ -3,7 +3,8 @@
     package="com.example.cocktailfinder">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -15,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailFinder"
         tools:targetApi="31">
+
+        <activity android:name=".ui.settings.SettingsActivity" />
 
         <activity
             android:name=".ui.cocktail.CocktailDetail"
@@ -31,9 +34,5 @@
             </intent-filter>
         </activity>
 
-        <!-- Ensure SettingsActivity is declared correctly -->
-        <activity android:name=".ui.settings.SettingsActivity" />
-
     </application>
-
 </manifest>
