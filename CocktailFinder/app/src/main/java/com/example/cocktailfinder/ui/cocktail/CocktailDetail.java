@@ -1,10 +1,12 @@
 package com.example.cocktailfinder.ui.cocktail;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,8 +41,6 @@ public class CocktailDetail extends AppCompatActivity {
 
         TextView nameTextView = findViewById(R.id.cocktail_name);
         TextView tagsTextView = findViewById(R.id.cocktail_tags);
-        TextView categoryTextView = findViewById(R.id.cocktail_category);
-        TextView alcoholicTextView = findViewById(R.id.cocktail_alcoholic);
         TextView glassTextView = findViewById(R.id.cocktail_glass);
         TextView instructionsTextView = findViewById(R.id.cocktail_instructions);
         TextView ingredientsTextView = findViewById(R.id.cocktail_ingredients);
@@ -51,12 +51,13 @@ public class CocktailDetail extends AppCompatActivity {
         if (cocktail != null) {
             setTextView(nameTextView, cocktail.getStrDrink());
             String formattedTags = formatTags(cocktail.getStrTags());
-            setTextView(tagsTextView, "Tags: " + formattedTags);
-            setTextView(categoryTextView, cocktail.getStrCategory());
-            setTextView(alcoholicTextView, cocktail.getStrAlcoholic());
+            if (!formattedTags.equals("null")){
+                setTextView(tagsTextView, "Tags: " + formattedTags);
+            }
             setTextView(glassTextView, cocktail.getStrGlass());
             setTextView(instructionsTextView, cocktail.getStrInstructions());
 
+            //pethetic
             if (cocktail.getStrInstructions() == null || cocktail.getStrInstructions().isEmpty()) {
                 instructionsLabel.setVisibility(TextView.GONE);
             } else {
@@ -88,6 +89,14 @@ public class CocktailDetail extends AppCompatActivity {
 
             // Load the cocktail image URL using AsyncTask
             new LoadImageTask(cocktailImageView).execute(cocktail.getStrDrinkThumb());
+
+            // Set up the button click event after cocktail details are loaded
+            Button prepareButton = findViewById(R.id.prepare_button);
+            prepareButton.setOnClickListener(v -> {
+                Intent intent = new Intent(CocktailDetail.this, PrepareFormActivity.class);
+                intent.putExtra("cocktail_name", cocktail.getStrDrink());
+                startActivity(intent);
+            });
         }
     }
 
@@ -100,9 +109,9 @@ public class CocktailDetail extends AppCompatActivity {
     }
 
     private int appendIngredient(StringBuilder ingredients, String ingredient, String measure, int number) {
-        if (ingredient != null && !ingredient.isEmpty()) {
+        if (ingredient != null && !ingredient.isEmpty() && !ingredient.equals("null")) {
             ingredients.append(number).append(". ").append(ingredient);
-            if (measure != null && !measure.isEmpty()) {
+            if (measure != null && !measure.isEmpty() && !measure.equals("null")) {
                 ingredients.append(" - ").append(measure);
             }
             ingredients.append("\n");

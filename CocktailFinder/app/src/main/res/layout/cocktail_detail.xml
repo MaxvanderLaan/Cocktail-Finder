@@ -7,19 +7,18 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/cocktail_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"/>
     </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:orientation="vertical"
@@ -39,40 +38,12 @@
                 android:textColor="?android:attr/textColorPrimary"/>
 
             <TextView
-                android:id="@+id/tags_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"/>
-
-            <TextView
                 android:id="@+id/cocktail_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:textColor="?android:attr/textColorSecondary"/>
 
-            <TextView
-                android:id="@+id/cocktail_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="?android:attr/textColorSecondary"/>
-
-            <TextView
-                android:id="@+id/cocktail_alcoholic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="?android:attr/textColorSecondary"/>
-
-            <TextView
-                android:id="@+id/cocktail_glass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="?android:attr/textColorSecondary"/>
-
-            <!-- Bold Instructions label -->
             <TextView
                 android:id="@+id/instructions_label"
                 android:layout_width="wrap_content"
@@ -89,7 +60,6 @@
                 android:layout_marginTop="4dp"
                 android:textColor="?android:attr/textColorSecondary"/>
 
-            <!-- Bold Ingredients label -->
             <TextView
                 android:id="@+id/ingredients_label"
                 android:layout_width="wrap_content"
@@ -105,6 +75,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="?android:attr/textColorSecondary"/>
+
+            <TextView
+                android:id="@+id/glass_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Served in:"
+                android:textStyle="bold"
+                android:layout_marginTop="-3dp"
+                android:textColor="?android:attr/textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/cocktail_glass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="?android:attr/textColorSecondary"/>
+
+            <Button
+                android:id="@+id/prepare_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Add Cocktail to Prepared" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

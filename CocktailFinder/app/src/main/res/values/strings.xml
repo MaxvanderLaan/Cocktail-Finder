@@ -10,5 +10,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Search</string>
     <string name="menu_slideshow">Saved</string>
+    <string name="menu_prepared">Prepared</string>
     <string name="download_icon">Download Icon</string>
 </resources>
