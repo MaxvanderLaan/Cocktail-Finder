@@ -21,4 +21,14 @@
             android:icon="@drawable/ic_menu_prepared"
             android:title="@string/menu_prepared" />
     </group>
+
+    <group
+        android:id="@+id/group_bottom"
+        android:checkableBehavior="single"
+        tools:visibility="visible">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="@string/menu_about" />
+    </group>
 </menu>

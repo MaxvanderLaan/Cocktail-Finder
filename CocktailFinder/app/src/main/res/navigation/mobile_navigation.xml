@@ -7,19 +7,31 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.cocktailfinder.ui.home.HomeFragment"
+        android:name="com.maxvanderlaan.cocktailfinder.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.cocktailfinder.ui.search.SearchFragment"
+        android:name="com.maxvanderlaan.cocktailfinder.ui.search.SearchFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.cocktailfinder.ui.saved.SavedFragment"
+        android:name="com.maxvanderlaan.cocktailfinder.ui.saved.SavedFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_saved" />
+
+    <fragment
+        android:id="@+id/nav_prepared"
+        android:name="com.maxvanderlaan.cocktailfinder.ui.prepared.PreparedFragment"
+        android:label="@string/menu_prepared"
+        tools:layout="@layout/fragment_prepared" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.maxvanderlaan.cocktailfinder.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

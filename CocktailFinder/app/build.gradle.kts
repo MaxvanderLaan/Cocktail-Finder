@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.cocktailfinder"
+    namespace = "com.maxvanderlaan.cocktailfinder"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.cocktailfinder"
+        applicationId = "com.maxvanderlaan.cocktailfinder"
         minSdk = 33
         targetSdk = 34
         versionCode = 1

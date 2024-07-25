@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.cocktailfinder">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,18 +16,18 @@
         android:theme="@style/Theme.CocktailFinder"
         tools:targetApi="31">
 
-        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name="com.maxvanderlaan.cocktailfinder.ui.settings.SettingsActivity" />
 
         <activity
-            android:name=".ui.cocktail.CocktailDetail"
+            android:name="com.maxvanderlaan.cocktailfinder.ui.cocktail.CocktailDetail"
             android:exported="false" />
 
         <activity
-            android:name=".ui.cocktail.PrepareFormActivity"
+            android:name="com.maxvanderlaan.cocktailfinder.ui.cocktail.PrepareFormActivity"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.maxvanderlaan.cocktailfinder.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CocktailFinder.NoActionBar">

@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
         android:key="dark_mode"
         android:title="Dark Mode"
         android:summary="Enable dark mode for the app"
         android:defaultValue="false" />
+
+    <Preference
+        android:key="wipe_data"
+        android:title="Wipe All Data"
+        android:summary="This will delete all stored data including preferences" />
 </PreferenceScreen>
