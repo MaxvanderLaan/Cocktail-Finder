@@ -76,6 +76,10 @@ public class PrepareFormActivity extends AppCompatActivity {
             String cocktailName = getIntent().getStringExtra("cocktail_name");
             Prepared prepared = new Prepared(cocktailName, rating, imagePath);
             savePreparedToPreferences(prepared);
+
+            // Show a toast message to confirm the cocktail has been added
+            Toast.makeText(this, "Cocktail added to prepared", Toast.LENGTH_SHORT).show();
+
             finish();
         } else {
             Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
