@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,7 +71,10 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.Cockta
             AlertDialog.Builder builder = new AlertDialog.Builder(context)
                     .setTitle("Download Confirmation")
                     .setMessage("Do you want to download this cocktail for offline storage?")
-                    .setPositiveButton("Confirm", (dialog, which) -> FileUtils.saveCocktailToFile(context, cocktail))
+                    .setPositiveButton("Confirm", (dialog, which) -> {
+                        FileUtils.saveCocktailToFile(context, cocktail);
+                        Toast.makeText(context, "Cocktail added to saved", Toast.LENGTH_SHORT).show();
+                    })
                     .setNegativeButton("Cancel", null);
 
             AlertDialog dialog = builder.create();

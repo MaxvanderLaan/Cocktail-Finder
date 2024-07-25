@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Register the theme change receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(themeChangeReceiver,
-                new IntentFilter("com.example.cocktailfinder.THEME_CHANGE"));
+                new IntentFilter("com.maxvanderlaan.cocktailfinder.THEME_CHANGE"));
 
         // Check for storage permissions
         checkStoragePermissions();
