@@ -11,7 +11,6 @@ public class Prepared {
         this.imagePath = imagePath;
     }
 
-    // Getters and setters
     public String getCocktailName() { return cocktailName; }
     public void setCocktailName(String cocktailName) { this.cocktailName = cocktailName; }
 

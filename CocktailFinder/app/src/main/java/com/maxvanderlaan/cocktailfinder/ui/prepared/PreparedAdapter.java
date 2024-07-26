@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.collection.LruCache;
 
 import com.maxvanderlaan.cocktailfinder.R;
 import com.maxvanderlaan.cocktailfinder.model.Prepared;
@@ -25,9 +27,14 @@ import java.util.List;
 public class PreparedAdapter extends RecyclerView.Adapter<PreparedAdapter.PreparedViewHolder> {
 
     private List<Prepared> preparedList;
+    private LruCache<String, Bitmap> imageCache;
 
     public PreparedAdapter() {
-        this.preparedList = new ArrayList<>(); // Ensure the list is initialized
+        this.preparedList = new ArrayList<>();
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+        imageCache = new LruCache<>(cacheSize);
     }
 
     public void updatePreparedList(List<Prepared> newPreparedList) {
@@ -50,33 +57,19 @@ public class PreparedAdapter extends RecyclerView.Adapter<PreparedAdapter.Prepar
         Prepared prepared = preparedList.get(position);
         holder.nameTextView.setText(prepared.getCocktailName());
 
-        // Format the rating with "/10.0"
         String formattedRating = String.format("%.1f/10.0", prepared.getRating());
         holder.ratingTextView.setText(formattedRating);
 
-        // Load and rotate the image, then set it to the ImageView
-        try {
-            String imagePath = prepared.getImagePath();
-            if (imagePath != null) {
-                // Ensure the image path is correct and doesn't contain extra characters
-                Uri imageUri = Uri.parse(imagePath.startsWith("file://") ? imagePath : "file://" + imagePath);
-
-                Log.d("PreparedAdapter", "Loading image from URI: " + imageUri);
-
-                Bitmap bitmap = loadAndRotateImage(holder.itemView.getContext().getContentResolver(), imageUri);
-                if (bitmap != null) {
-                    holder.imageView.setImageBitmap(bitmap);
-                } else {
-                    Log.e("PreparedAdapter", "Bitmap is null for URI: " + imageUri);
-                    holder.imageView.setImageResource(R.drawable.placeholder); // Fallback placeholder
-                }
+        String imagePath = prepared.getImagePath();
+        if (imagePath != null) {
+            Bitmap cachedBitmap = imageCache.get(imagePath);
+            if (cachedBitmap != null) {
+                holder.imageView.setImageBitmap(cachedBitmap);
             } else {
-                Log.e("PreparedAdapter", "Image path is null for position: " + position);
-                holder.imageView.setImageResource(R.drawable.placeholder); // Fallback placeholder
+                new LoadImageTask(holder.imageView, imagePath).execute();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            holder.imageView.setImageResource(R.drawable.placeholder); // Fallback placeholder
+        } else {
+            holder.imageView.setImageResource(R.drawable.placeholder);
         }
     }
 
@@ -98,24 +91,73 @@ public class PreparedAdapter extends RecyclerView.Adapter<PreparedAdapter.Prepar
         }
     }
 
+    private class LoadImageTask extends AsyncTask<Void, Void, Bitmap> {
+        private ImageView imageView;
+        private String imagePath;
+
+        public LoadImageTask(ImageView imageView, String imagePath) {
+            this.imageView = imageView;
+            this.imagePath = imagePath;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            Uri imageUri = Uri.parse(imagePath.startsWith("file://") ? imagePath : "file://" + imagePath);
+            return loadAndRotateImage(imageView.getContext().getContentResolver(), imageUri);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (bitmap != null) {
+                imageCache.put(imagePath, bitmap); // Cache the loaded bitmap
+                imageView.setImageBitmap(bitmap);
+            } else {
+                imageView.setImageResource(R.drawable.placeholder);
+            }
+        }
+    }
+
     private Bitmap loadAndRotateImage(ContentResolver contentResolver, Uri imageUri) {
         try (InputStream imageStream = contentResolver.openInputStream(imageUri)) {
             if (imageStream == null) {
-                Log.e("PreparedAdapter", "ImageStream is null for URI: " + imageUri);
                 return null;
             }
-            Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-            if (bitmap != null) {
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(imageStream, null, options);
+
+            options.inSampleSize = calculateInSampleSize(options, 100, 100);
+            options.inJustDecodeBounds = false;
+
+            imageStream.close();
+            try (InputStream inputStream = contentResolver.openInputStream(imageUri)) {
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
                 return rotateImage(bitmap, 90); // Rotate image by 90 degrees
-            } else {
-                Log.e("PreparedAdapter", "Bitmap decoding failed for URI: " + imageUri);
             }
         } catch (Exception e) {
             Log.e("PreparedAdapter", "Error loading image from URI: " + imageUri, e);
         }
-        return null; // Return null if there's an error or the image cannot be loaded
+        return null;
     }
 
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
 
     private Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();

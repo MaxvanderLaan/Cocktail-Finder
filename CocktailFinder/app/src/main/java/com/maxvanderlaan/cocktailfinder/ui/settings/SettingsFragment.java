@@ -42,13 +42,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Determine the text color based on the current theme
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
         int positiveButtonColor = isDarkMode ? getResources().getColor(android.R.color.white) : getResources().getColor(android.R.color.black);
         int negativeButtonColor = positiveButtonColor;
 
-        // Set the text color for the dialog buttons
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(positiveButtonColor);
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(negativeButtonColor);
     }
@@ -57,15 +55,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Context context = getActivity();
         if (context == null) return;
 
-        // Wipe all SharedPreferences
         File sharedPrefsDir = new File(context.getFilesDir().getParentFile(), "shared_prefs");
         deleteRecursive(sharedPrefsDir);
 
-        // Remove prepared images
         File preparedImagesDir = context.getDir("prepared_images", Context.MODE_PRIVATE);
         deleteRecursive(preparedImagesDir);
 
-        // Remove cocktail data file
         File cocktailsFile = new File(context.getFilesDir(), "cocktails.json");
         if (cocktailsFile.exists()) {
             cocktailsFile.delete();
@@ -73,7 +68,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Toast.makeText(context, "All data wiped and restarting", Toast.LENGTH_SHORT).show();
 
-        // Restart the app by clearing the task stack and reopening the main activity
         restartApp();
     }
 

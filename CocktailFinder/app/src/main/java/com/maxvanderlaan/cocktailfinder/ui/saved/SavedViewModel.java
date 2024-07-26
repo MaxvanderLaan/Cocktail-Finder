@@ -28,7 +28,6 @@ public class SavedViewModel extends ViewModel {
     public void loadSavedCocktails(Context context) {
         List<Cocktail> cocktails = FileUtils.readCocktailsFromFile(context);
 
-        // Sort the cocktails alphabetically by name
         Collections.sort(cocktails, new Comparator<Cocktail>() {
             @Override
             public int compare(Cocktail c1, Cocktail c2) {

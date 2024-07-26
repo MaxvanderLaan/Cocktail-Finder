@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-    // BroadcastReceiver to listen for theme change
     private BroadcastReceiver themeChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -44,11 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Retrieve the dark mode preference
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
 
-        // Apply the theme based on the preference
         if (isDarkMode) {
             setTheme(R.style.AppTheme_Dark);
         } else {
@@ -65,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_about)
                 .setOpenableLayout(drawer)
@@ -76,11 +71,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Register the theme change receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(themeChangeReceiver,
                 new IntentFilter("com.maxvanderlaan.cocktailfinder.THEME_CHANGE"));
 
-        // Check for storage permissions
         checkStoragePermissions();
     }
 
@@ -109,13 +102,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Unregister the theme change receiver
         LocalBroadcastManager.getInstance(this).unregisterReceiver(themeChangeReceiver);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -124,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            // Start SettingsActivity when the settings menu item is selected
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;

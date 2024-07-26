@@ -77,7 +77,6 @@ public class PrepareFormActivity extends AppCompatActivity {
             Prepared prepared = new Prepared(cocktailName, rating, imagePath);
             savePreparedToPreferences(prepared);
 
-            // Show a toast message to confirm the cocktail has been added
             Toast.makeText(this, "Cocktail added to prepared", Toast.LENGTH_SHORT).show();
 
             finish();
@@ -106,10 +105,8 @@ public class PrepareFormActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("prepared_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Convert the object to a string using your serialization method
         String preparedData = serializePrepared(prepared);
 
-        // Retrieve the existing data and add the new one
         String existingData = sharedPreferences.getString("prepared_list", "");
         if (!existingData.isEmpty()) {
             existingData += ";";
@@ -121,7 +118,6 @@ public class PrepareFormActivity extends AppCompatActivity {
     }
 
     private String serializePrepared(Prepared prepared) {
-        // Simple serialization logic (e.g., CSV)
         return prepared.getCocktailName() + "," + prepared.getRating() + "," + prepared.getImagePath();
     }
 }

@@ -4,43 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Cocktail implements Parcelable {
-    private String idDrink;
-    private String strDrink;
-    private String strTags;
-    private String strCategory;
-    private String strAlcoholic;
-    private String strGlass;
-    private String strInstructions;
-    private String strIngredient1;
-    private String strIngredient2;
-    private String strIngredient3;
-    private String strIngredient4;
-    private String strIngredient5;
-    private String strIngredient6;
-    private String strIngredient7;
-    private String strIngredient8;
-    private String strIngredient9;
-    private String strIngredient10;
-    private String strIngredient11;
-    private String strIngredient12;
-    private String strMeasure1;
-    private String strMeasure2;
-    private String strMeasure3;
-    private String strMeasure4;
-    private String strMeasure5;
-    private String strMeasure6;
-    private String strMeasure7;
-    private String strMeasure8;
-    private String strMeasure9;
-    private String strMeasure10;
-    private String strMeasure11;
-    private String strMeasure12;
-    private String strDrinkThumb;
+    private String idDrink, strDrink, strTags, strCategory, strAlcoholic, strGlass, strInstructions, strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strDrinkThumb;
 
-    // Default constructor
     public Cocktail() {}
 
-    // Constructor with parameters
     public Cocktail(String idDrink, String strDrink, String strTags, String strCategory, String strAlcoholic, String strGlass, String strInstructions,
                     String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6,
                     String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12,
@@ -81,7 +48,6 @@ public class Cocktail implements Parcelable {
         this.strDrinkThumb = strDrinkThumb;
     }
 
-    // Parcelable constructor
     protected Cocktail(Parcel in) {
         idDrink = in.readString();
         strDrink = in.readString();
@@ -170,7 +136,6 @@ public class Cocktail implements Parcelable {
         return 0;
     }
 
-    // Getters and Setters
     public String getIdDrink() {
         return idDrink;
     }

@@ -24,11 +24,9 @@ public class CocktailDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Retrieve the dark mode preference
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
 
-        // Apply the theme based on the preference
         if (isDarkMode) {
             setTheme(R.style.AppTheme_Dark);
         } else {
@@ -52,10 +50,9 @@ public class CocktailDetail extends AppCompatActivity {
         if (cocktail != null) {
             setTextView(nameTextView, cocktail.getStrDrink());
 
-            //set and null check tags.
             String formattedTags = formatTags(cocktail.getStrTags());
             setTextView(tagsTextView, "Tags: " + formattedTags);
-            if (formattedTags == null || formattedTags.isEmpty() || formattedTags.equals("null")) {
+            if (formattedTags.isEmpty() || formattedTags.equals("null")) {
                 tagsTextView.setVisibility(View.GONE);
             } else {
                 setTextView(tagsTextView, "Tags: " + formattedTags);
@@ -94,10 +91,8 @@ public class CocktailDetail extends AppCompatActivity {
                 ingredientsTextView.setText(ingredients.toString());
             }
 
-            // Load the cocktail image URL using AsyncTask
             new LoadImageTask(cocktailImageView).execute(cocktail.getStrDrinkThumb());
 
-            // Set up the button click event after cocktail details are loaded
             Button prepareButton = findViewById(R.id.prepare_button);
             prepareButton.setOnClickListener(v -> {
                 Intent intent = new Intent(CocktailDetail.this, PrepareFormActivity.class);

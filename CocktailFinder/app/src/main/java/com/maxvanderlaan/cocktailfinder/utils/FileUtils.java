@@ -32,7 +32,6 @@ public class FileUtils {
             JSONArray jsonArray = new JSONArray();
             Set<String> cocktailIds = new HashSet<>();
 
-            // If the file exists, read its current content
             if (file.exists()) {
                 fileReader = new FileReader(file);
                 int content;
@@ -49,7 +48,6 @@ public class FileUtils {
                 fileReader.close();
             }
 
-            // Add the new cocktail to the JSON array if it's not a duplicate
             if (!cocktailIds.contains(cocktail.getIdDrink())) {
                 JSONObject cocktailJsonObject = new JSONObject();
                 cocktailJsonObject.put("idDrink", cocktail.getIdDrink());
@@ -87,7 +85,6 @@ public class FileUtils {
                 jsonArray.put(cocktailJsonObject);
             }
 
-            // Write the updated JSON array to the file
             fileWriter = new FileWriter(file);
             fileWriter.write(jsonArray.toString());
             Log.d("FileUtils", "Cocktail data saved.");
